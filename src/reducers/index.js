@@ -9,7 +9,9 @@ const basket = handleActions({
     // TODO: сделать сохранение корзины в сессии
     const { item, countItem } = payload.payload;
     const { items } = state;
-    const newItems = { ...items, [item.id]: { item, countItem } };
+    const oldCountItem = _.get(items, `${item.id}.countItem`, 0);
+    const newCount = _.parseInt(oldCountItem) + _.parseInt(countItem);
+    const newItems = { ...items, [item.id]: { item, countItem: newCount } };
     const newState = { ...state, items: newItems };
     const dataSessionStorage = JSON.stringify({ items: newItems });
     sessionStorage.setItem(config.appCode, dataSessionStorage);

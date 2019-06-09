@@ -56,6 +56,7 @@ const basket = handleActions({
     return { ...state, items: newItems };
   },
   [actions.setEmptyBasket](state) {
+    sessionStorage.removeItem(config.appCode);
     return { ...state, items: [] };
   },
 }, '');

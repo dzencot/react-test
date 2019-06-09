@@ -52,7 +52,7 @@ class Category extends React.Component {
 
   renderItem = (item) => {
     const { id, title } = item;
-    return <div className="category-square"
+    return <div className="category-square item-square"
         key={id}
         id={id}
         title={title}

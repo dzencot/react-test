@@ -81,12 +81,14 @@ class Basket extends React.Component {
   };
 
   pay = () => {
-    console.log('pay');
-    this.setState({
-      payingProcess: true,
-    });
-    this.openModalPay();
-    this.payingProcess();
+    const items = _.toArray(_.get(this.props, 'basket.items', []));
+    if (items && items.count > 0) {
+      this.setState({
+        payingProcess: true,
+      });
+      this.openModalPay();
+      this.payingProcess();
+    }
   }
 
   openModalPay = () => {
@@ -134,7 +136,7 @@ class Basket extends React.Component {
           {`${item.title}(${countItem})`}
         </div>
         <div className="basket-pay-modal-result-item-amount">
-          {amount}
+          {parseFloat(amount).toFixed(2)}
         </div>
       </div>
     };
@@ -147,7 +149,6 @@ class Basket extends React.Component {
 
   renderPayModal() {
     const { showPayModal, payingProcess } = this.state;
-    console.log('payingProcess:', payingProcess);
     Modal.setAppElement('#container');
 
     return <Modal

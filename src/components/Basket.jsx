@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import '../css/Basket.css';
 import { setEmptyBasket, addItem, incrementItem, decrementItem, removeItem } from '../actions';
+import { config } from '../config';
 
 const mapStateToProps = state => {
   const props = {
@@ -17,6 +18,15 @@ const mapStateToProps = state => {
 class Basket extends React.Component {
   constructor(props) {
     super(props);
+    const savedData = sessionStorage.getItem(config.appCode);
+    const parsedData = JSON.parse(savedData);
+    const { items } = parsedData || { items: [] };
+    _.forEach(items, (element) => {
+      const { item, countItem } = element;
+      const { dispatch } = this.props;
+      dispatch(addItem({ item, countItem }));
+    });
+
     this.state = { showBasket: false, showPayModal: false, payingProcess: true };
   }
 

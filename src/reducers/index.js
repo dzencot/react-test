@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import * as actions from '../actions';
+import { config } from '../config';
 
 const basket = handleActions({
   [actions.addItem](state, payload) {
@@ -10,6 +11,8 @@ const basket = handleActions({
     const { items } = state;
     const newItems = { ...items, [item.id]: { item, countItem } };
     const newState = { ...state, items: newItems };
+    const dataSessionStorage = JSON.stringify({ items: newItems });
+    sessionStorage.setItem(config.appCode, dataSessionStorage);
     return newState;
   },
   [actions.incrementItem](state, payload) {

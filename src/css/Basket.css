@@ -174,12 +174,16 @@ button.basket-pay-button {
 }
 
 .basket-pay-modal-spinner {
-    margin: 0;
-    position: absolute;
-    top: 50%;
+    text-align: center;
+}
+
+.basket-pay-modal-spinner-circle {
+    width: 100px;
+    margin-top: 10%;
+/*    top: 50%;
     left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+    margin-right: -50%;*/
+   /* transform: translate(-50%, -50%);*/
 }
 
 .basket-pay-modal-result-item {

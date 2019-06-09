@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import '../css/Basket.css';
 import { setEmptyBasket, addItem, incrementItem, decrementItem, removeItem } from '../actions';
 import { config } from '../config';
+import { Circle } from 'rc-progress';
 
 const mapStateToProps = state => {
   const props = {
@@ -27,7 +28,20 @@ class Basket extends React.Component {
       dispatch(addItem({ item, countItem }));
     });
 
-    this.state = { showBasket: false, showPayModal: false, payingProcess: true };
+    this.state = {
+      showBasket: false,
+      showPayModal: false,
+      payingProcess: false,
+      intervalId: '',
+      payProgress: 0,
+    };
+  }
+
+  componentWillUnmount() {
+    const { intervalId } = this.state;
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
   }
 
   incrementItem = (item) => {
@@ -46,6 +60,10 @@ class Basket extends React.Component {
   };
 
   pay = () => {
+    console.log('pay');
+    this.setState({
+      payingProcess: true,
+    });
     this.openModalPay();
     this.payingProcess();
   }
@@ -67,13 +85,22 @@ class Basket extends React.Component {
   };
 
   payingProcess = () => {
-    setTimeout(() => {
-      this.setState({ payingProcess: false });
-    }, 1000);
+    const timer = () => {
+      const payProgress = _.parseInt(this.state.payProgress) + 5;
+      if (payProgress === 100) {
+        this.setState({ payingProcess: false });
+        clearInterval(this.state.intervalId);
+      }
+
+      this.setState({ payProgress });
+    };
+    const intervalId = setInterval(timer, 100);
+    this.setState({ intervalId, payProgress: 0 });
   };
 
   renderSpinner() {
-    return <div className="basket-pay-modal-spinner"><img src="/spinner.gif" /></div>;
+    const { payProgress } = this.state;
+    return <div className="basket-pay-modal-spinner"><Circle percent={payProgress} strokeColor="blue" strokeWidth="5" className="basket-pay-modal-spinner-circle" /></div>;
   }
 
   renderPayingResult() {
@@ -99,6 +126,7 @@ class Basket extends React.Component {
 
   renderPayModal() {
     const { showPayModal, payingProcess } = this.state;
+    console.log('payingProcess:', payingProcess);
     Modal.setAppElement('#container');
 
     return <Modal

@@ -1,0 +1,208 @@
+.basket {
+    text-align: center;
+    border: 1px solid;
+    margin-left: auto;
+    margin-right: 1.6%;
+    max-width: 300px;
+    display: inline-block;
+    float: right;
+    min-width: 300px;
+}
+
+.basket-block {
+    position: absolute;
+    float: right;
+    right: 33px;
+    width: 400px;
+    z-index: 1;
+}
+
+.basket-items {
+    background: white;
+    border: 1px solid;
+    padding: 10px;
+    font-size: x-large;
+    overflow-y: auto;
+    height: 300px;
+}
+
+.basket-item {
+    display: flow-root;
+}
+
+.basket-item-title {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.basket-item-count {
+    position: relative;
+    display: inline-block; 
+    border: 1px solid;
+    border-radius: 10px;
+    float: right;
+    margin-right: 36px;
+}
+
+.basket-item-count-input {
+    width: 60px;
+    height: 20px;
+    border: none;
+    margin: 10px;
+    font-size: xx-large;
+    outline: none;
+}
+
+.basket-item-count-buttons {
+    display: inline-block;
+    float: right;
+}
+
+button.basket-item-count-button {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+div.basket-item-count-button {
+    display: flex;
+}
+
+.basket-arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-bottom: 5px solid black;
+}
+
+.basket-arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    border-top: 5px solid black;
+}
+
+.close {
+    position: absolute;
+    right: -38px;
+    top: 6px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+    cursor: pointer;
+}
+.close:hover {
+    opacity: 1;
+}
+.close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: red;
+}
+.close:before {
+    transform: rotate(45deg);
+}
+.close:after {
+    transform: rotate(-45deg);
+}
+
+.basket-pay-button {
+    background: white;
+    border: 1px solid;
+}
+
+button.basket-pay-button {
+    width: 100px;
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.basket-pay-modal-title {
+    font-size: 32px;
+    border-bottom: 1px solid;
+}
+
+.basket-pay-modal-overlay {
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    right: 25%;
+    bottom: 25%;
+    background-color: white;
+    border: 2px solid;
+    min-height: 310px;
+}
+
+.basket-pay-modal-close {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 32px;
+    height: 32px;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.basket-pay-modal-close:before, .basket-pay-modal-close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: red;
+}
+.basket-pay-modal-close:before {
+    transform: rotate(45deg);
+}
+.basket-pay-modal-close:after {
+    transform: rotate(-45deg);
+}
+
+.basket-pay-modal {
+    outline: none;
+}
+
+.basket-pay-modal-spinner {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.basket-pay-modal-result-item {
+    margin: 10px 20px;
+    font-size: x-large;
+}
+
+.basket-pay-modal-result-item-title {
+    display: inline-block;
+}
+
+.basket-pay-modal-result-item-amount {
+    display: inline-block;
+    float: right;
+}
+
+.basket-pay-modal-result-info {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: x-large;
+}
+
+.basket-panel {
+    cursor: pointer;
+}

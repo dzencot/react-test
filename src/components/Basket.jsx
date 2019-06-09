@@ -57,8 +57,8 @@ class Basket extends React.Component {
   payingProcess = () => {
     setTimeout(() => {
       this.setState({ payingProcess: false });
-      const { dispatch } = this.props;
-      dispatch(setEmptyBasket());
+      // const { dispatch } = this.props;
+      // dispatch(setEmptyBasket());
     }, 1000);
   };
 
@@ -153,7 +153,7 @@ class Basket extends React.Component {
       </div>
       <div className="basket-pay-button">
         <div className="basket-pay-info">
-          <span>Итого: {totalPrice}</span><br />
+          <span>Итого: {parseFloat(totalPrice, 2).toFixed(2)}</span><br />
           <span>Общее количество: {totalCount}</span>
         </div>
         <button className="basket-pay-button" onClick={this.pay}>Оплатить</button>
@@ -180,7 +180,7 @@ class Basket extends React.Component {
       <div className="basket">
         <div className="basket-panel" onClick={this.toggleBasket}>
           Корзина:<br />
-          {totalPrice} {totalCount}
+          {parseFloat(totalPrice, 2).toFixed(2)} {totalCount}
         </div>
         {this.renderBasket({ totalPrice, totalCount })}
         {this.renderPayModal()}

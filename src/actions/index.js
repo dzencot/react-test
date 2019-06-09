@@ -14,3 +14,4 @@ export const loadItems = createAction('ITEMS_LOAD');
 export const incrementItem = createAction('ITEM_INCREMENT');
 export const decrementItem = createAction('ITEM_DECREMENT');
 
+export const setEmptyBasket = createAction('EMPTY_BASKET');

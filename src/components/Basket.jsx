@@ -4,7 +4,7 @@ import cn from 'classnames';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import '../css/Basket.css';
-import { addItem, incrementItem, decrementItem, removeItem } from '../actions';
+import { setEmptyBasket, addItem, incrementItem, decrementItem, removeItem } from '../actions';
 
 const mapStateToProps = state => {
   const props = {
@@ -57,6 +57,8 @@ class Basket extends React.Component {
   payingProcess = () => {
     setTimeout(() => {
       this.setState({ payingProcess: false });
+      const { dispatch } = this.props;
+      dispatch(setEmptyBasket());
     }, 1000);
   };
 
@@ -137,7 +139,7 @@ class Basket extends React.Component {
     </div>;
   }
 
-  renderBasket = () => {
+  renderBasket = ({ totalPrice, totalCount }) => {
     const items = _.toArray(_.get(this.props, 'basket.items', []));
     const { showBasket } = this.state;
     const classesBasket = cn({
@@ -150,6 +152,10 @@ class Basket extends React.Component {
         {items.map(this.renderItem)}
       </div>
       <div className="basket-pay-button">
+        <div className="basket-pay-info">
+          <span>Итого: {totalPrice}</span><br />
+          <span>Общее количество: {totalCount}</span>
+        </div>
         <button className="basket-pay-button" onClick={this.pay}>Оплатить</button>
       </div>
     </div>;
@@ -161,7 +167,6 @@ class Basket extends React.Component {
     });
   };
 
-
   render() {
     const items = _.toArray(_.get(this.props, 'basket.items', []));
     const { totalPrice, totalCount } = items.reduce((carry, { countItem, item }) => {
@@ -172,12 +177,12 @@ class Basket extends React.Component {
     }, { totalPrice: 0, totalCount: 0 });
 
     return (
-      <div className="basket" onClick={this.toggleBasket}>
-        <div className="basket-panel">
+      <div className="basket">
+        <div className="basket-panel" onClick={this.toggleBasket}>
           Корзина:<br />
           {totalPrice} {totalCount}
         </div>
-        {this.renderBasket()}
+        {this.renderBasket({ totalPrice, totalCount })}
         {this.renderPayModal()}
       </div>
     );

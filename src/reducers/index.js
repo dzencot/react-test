@@ -36,6 +36,9 @@ const basket = handleActions({
     const newItems = _.omit(items, payloadItem.id);
     return { ...state, items: newItems };
   },
+  [actions.setEmptyBasket](state) {
+    return { ...state, items: [] };
+  },
 }, '');
 
 const appState = handleActions({

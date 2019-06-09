@@ -52,13 +52,13 @@ class Basket extends React.Component {
       showPayModal: false,
       payingProcess: true,
     });
+    const { dispatch } = this.props;
+    dispatch(setEmptyBasket());
   };
 
   payingProcess = () => {
     setTimeout(() => {
       this.setState({ payingProcess: false });
-      // const { dispatch } = this.props;
-      // dispatch(setEmptyBasket());
     }, 1000);
   };
 

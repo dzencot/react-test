@@ -4,7 +4,7 @@ import cn from 'classnames';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import '../css/Basket.css';
-import { setEmptyBasket, addItem, incrementItem, decrementItem, removeItem } from '../actions';
+import { setEmptyBasket, addItem, incrementItem, decrementItem, removeItem, itemCountChange } from '../actions';
 import { config } from '../config';
 import { Circle } from 'rc-progress';
 
@@ -35,6 +35,8 @@ class Basket extends React.Component {
       intervalId: '',
       payProgress: 0,
     };
+
+    this.node = React.createRef();
   }
 
   componentWillUnmount() {
@@ -42,7 +44,26 @@ class Basket extends React.Component {
     if (intervalId) {
       clearInterval(intervalId);
     }
+    document.removeEventLisener('mousedown', this.handleClick, false);
   }
+
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  handleClick = (e) => {
+    // TODO: не работает, найти способ как остановить события других компонентов
+    // if (e.nativeEvent) {
+    //   e.stopImmediatePropagation();
+    // }
+    if (!this.node.current.contains(e.target)) {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      this.setState({
+        showBasket: false,
+      });
+    }
+  };
 
   incrementItem = (item) => {
     const { dispatch } = this.props;
@@ -145,7 +166,7 @@ class Basket extends React.Component {
   changeCountItem = item => event => {
     const countItem = event.target.value;
     const { dispatch } = this.props;
-    dispatch(addItem({ item, countItem }));
+    dispatch(itemCountChange({ item, countItem }));
   };
 
   renderItem = (dataItem) => {
@@ -185,7 +206,7 @@ class Basket extends React.Component {
       'basket-block': true,
     });
 
-    return <div className={classesBasket}>
+    return <div className={classesBasket} >
       <div className="basket-items">
         {items.map(this.renderItem)}
       </div>
@@ -209,13 +230,13 @@ class Basket extends React.Component {
     const items = _.toArray(_.get(this.props, 'basket.items', []));
     const { totalPrice, totalCount } = items.reduce((carry, { countItem, item }) => {
       const { price } = item;
-      carry.totalCount += countItem;
-      carry.totalPrice += (countItem * price);
+      carry.totalCount += (_.parseInt(countItem) || 0);
+      carry.totalPrice += ((_.parseInt(countItem) || 0) * (parseFloat(price) || 0));
       return carry;
     }, { totalPrice: 0, totalCount: 0 });
 
     return (
-      <div className="basket">
+      <div className="basket" ref={this.node}>
         <div className="basket-panel" onClick={this.toggleBasket}>
           Корзина:<br />
           {parseFloat(totalPrice, 2).toFixed(2)} {totalCount}

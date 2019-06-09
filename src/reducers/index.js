@@ -6,7 +6,6 @@ import { config } from '../config';
 
 const basket = handleActions({
   [actions.addItem](state, payload) {
-    // TODO: сделать сохранение корзины в сессии
     const { item, countItem } = payload.payload;
     const { items } = state;
     const oldCountItem = _.get(items, `${item.id}.countItem`, 0);
@@ -17,22 +16,37 @@ const basket = handleActions({
     sessionStorage.setItem(config.appCode, dataSessionStorage);
     return newState;
   },
+  [actions.itemCountChange](state, payload) {
+    const { item } = payload.payload;
+    let { countItem } = payload.payload;
+    // TODO: сделать проверку наличия количества товаров
+    if (countItem < 0) {
+      countItem = 0;
+    }
+    const { items } = state;
+    const newItems = { ...items, [item.id]: { item, countItem } };
+    const newState = { ...state, items: newItems };
+    const dataSessionStorage = JSON.stringify({ items: newItems });
+    sessionStorage.setItem(config.appCode, dataSessionStorage);
+    return newState;
+  },
   [actions.incrementItem](state, payload) {
     // TODO: добавить проверку наличия
     const payloadItem = payload.payload;
     const { items } = state;
     const item = _.get(items, payloadItem.id);
-    const newCount = _.parseInt(item.countItem) + 1;
+    const newCount = (_.parseInt(item.countItem) || 0) + 1;
     item.countItem = newCount;
     return { ...state, items };
   },
   [actions.decrementItem](state, payload) {
-    // TODO: добавить проверку если количество 0 или ниже
     const payloadItem = payload.payload;
     const { items } = state;
     const item = _.get(items, payloadItem.id);
-    const newCount = _.parseInt(item.countItem) - 1;
-    item.countItem = newCount;
+    const newCount = (_.parseInt(item.countItem) || 0) - 1;
+    if (newCount > 0) {
+      item.countItem = newCount;
+    }
     return { ...state, items };
   },
   [actions.removeItem](state, payload) {

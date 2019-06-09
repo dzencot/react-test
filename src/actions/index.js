@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 
 export const addItem = createAction('ITEM_ADD');
+export const itemCountChange = createAction('ITEM_COUNT_CHANGE');
 export const removeItem = createAction('ITEM_REMOVE');
 
 export const selectCategory = createAction('CATEGORY_SELECT');

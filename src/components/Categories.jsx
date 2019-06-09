@@ -33,7 +33,6 @@ class Categories extends React.Component {
   loadCategories() {
     const url = '/data/categories.json';
     return load(url).then(response => {
-      console.log('categories loaded');
       const data = JSON.parse(response);
       const categories = Array.isArray(data) ? data : [];
       const { dispatch } = this.props;

@@ -19,8 +19,6 @@ const mapStateToProps = state => {
 class App extends React.Component {
   getView(appState) {
     const { currentView } = appState;
-    console.log('current view:');
-    console.log(currentView);
     const views = {
       categories: () => {
         return <Categories />;

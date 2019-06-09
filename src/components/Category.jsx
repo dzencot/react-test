@@ -35,7 +35,6 @@ class Category extends React.Component {
   loadItems() {
     const url = '/data/items.json';
     return load(url).then(response => {
-      console.log('items loaded');
       const data = JSON.parse(response);
       const items = Array.isArray(data) ? data : [];
       const { dispatch } = this.props;

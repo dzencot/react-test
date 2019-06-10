@@ -81,8 +81,9 @@ class Basket extends React.Component {
   };
 
   pay = () => {
+    const { payingProcess } = this.state;
     const items = _.toArray(_.get(this.props, 'basket.items', []));
-    if (items && items.length > 0) {
+    if (!payingProcess && items && items.length > 0) {
       this.setState({
         payingProcess: true,
       });
@@ -110,7 +111,7 @@ class Basket extends React.Component {
 
   payingProcess = () => {
     const timer = () => {
-      const payProgress = _.parseInt(this.state.payProgress) + 5;
+      const payProgress = _.parseInt(this.state.payProgress) + 2;
       if (payProgress === 100) {
         this.setState({ payingProcess: false });
         clearInterval(this.state.intervalId);

@@ -50,13 +50,13 @@ class App extends React.Component {
     const item = _.get(appState, 'item');
     const renderNavCategory = () => {
       if (category) {
-        return <a className="nav" onClick={this.goToHome}>Перейти к выбору категорий</a>;
+        return <span className="nav" onClick={this.goToHome}>Перейти к выбору категорий</span>;
       }
       return '';
     };
     const renderNavItem = () => {
       if (item) {
-        return <a className="nav" onClick={() => this.goToItems(category)}>Перейти к выбору товаров</a>;
+        return <span className="nav" onClick={() => this.goToItems(category)}>Перейти к выбору товаров</span>;
       }
       return '';
     };

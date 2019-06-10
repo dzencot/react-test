@@ -82,7 +82,7 @@ class Basket extends React.Component {
 
   pay = () => {
     const items = _.toArray(_.get(this.props, 'basket.items', []));
-    if (items && items.count > 0) {
+    if (items && items.length > 0) {
       this.setState({
         payingProcess: true,
       });
@@ -103,6 +103,7 @@ class Basket extends React.Component {
       showPayModal: false,
       payingProcess: true,
     });
+    // TODO: переделать опустошение корзины
     const { dispatch } = this.props;
     dispatch(setEmptyBasket());
   };
